@@ -17,7 +17,7 @@ const App = () => {
         headers: {
           "Content-type": "application/json"
         },
-        body: JSON.stringify({"title": title})
+        body: JSON.stringify({ "title": title })
       })
       if (response.ok) {
         window.alert(`${title} added!`)
@@ -67,6 +67,42 @@ const App = () => {
     }
   }
 
+  const deleteBookById = async () => {
+    let number = window.prompt("Enter book id:")
+    if (number !== null) {
+      try {
+        const response = await fetch(`${API_SERVER_PREFIX}/books/delete/${number}`, {
+          method: "DELETE",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json"
+          }
+        })
+        if (response.ok) {
+          window.alert(`Book deleted!`)
+          window.location.reload()
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
+
+  const updateBookTitle = async (object) => {
+    try {
+      await fetch(`${API_SERVER_PREFIX}/books/update`, {
+        method: "PUT",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(object)
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div className="p-10 grid grid-cols-2 grid-rows-1">
       <main className="col-span-1">
@@ -76,10 +112,11 @@ const App = () => {
           <button className="p-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => { getAllBooks(); setDisplayBookList(true) }}>Get All Books</button>
           <button className="p-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => { getOneBookById(); setDisplayBookList(true) }}>Get One Book</button>
           <button className="p-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => { addNewBook() }}>Add new Book</button>
+          <button className="p-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={() => { deleteBookById() }}>Delete One Book</button>
         </div>
       </main>
       <aside className="col-start-2">
-        <ListAllBook books={bookList} display={displayBookList} />
+        <ListAllBook books={bookList} display={displayBookList}  update={updateBookTitle}/>
       </aside>
     </div>
   )

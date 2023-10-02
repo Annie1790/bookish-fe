@@ -43,7 +43,9 @@ const App = () => {
         },
       })
       if (response.ok) {
-        setBookList(await response.json())
+        let json = await response.json()
+        let result = Array.isArray(json) ? json : [json]
+        setBookList(result)
       }
     }
     catch (error) {
@@ -117,7 +119,9 @@ const App = () => {
         }
       })
       if (response.ok) {
-        setMemberList([await response.json()])
+        let json = await response.json()
+        let result = Array.isArray(json) ? json : [json]
+        setMemberList(result)
       }
     } catch (error) {
       console.error(error)

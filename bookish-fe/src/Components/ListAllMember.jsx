@@ -1,6 +1,6 @@
-import Book from "./Book";
+import Member from "./Member";
 
-const ListAllBook = ({ books, display, update }) => {
+const ListAllMember = ({member, display, update}) => {
 
     return (
         display ? (
@@ -8,14 +8,13 @@ const ListAllBook = ({ books, display, update }) => {
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Title</th>
-                        <th>Available</th>
+                        <th>Username</th>
                     </tr>
                 </thead>
                 {
-                    books ? (
-                        books.map((book) => {
-                            return <Book key={book.id} book={book}  update={update}/>
+                    member ? (
+                        member.map((user) => {
+                            return <Member key={user.id} user={user}  update={update}/>
                         })
                     ) : (<div></div>)
                 }
@@ -24,4 +23,4 @@ const ListAllBook = ({ books, display, update }) => {
     )
 }
 
-export default ListAllBook;
+export default ListAllMember;
